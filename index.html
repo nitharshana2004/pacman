@@ -3,59 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PACMAN</title>
+    <style>
+        #container {
+            width: 1000px;
+            height: 200px;
+        
+            margin: 20px;
+        
+        }
+        #pac-right {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+        }
+    </style>
 </head>
 <body>
-    <button onclick="create()">start</button>
+    <div id="container">
+        <img id="pac-right" src="./images/PacMan1.png">
+    </div>
+
     <script>
-        let pacmen1=['PacMan1.png','PacMan2.png']
-        let pacmen2=['PacMan3.png','PacMan4.png']
-        let pac1;
-function create(){
-    pac1=document.createElement("img");
-    console.log("hi");
-    pac1.src=pacmen1[0]
-    pac1.style.width="30px"
-    pac1.style.height="30px"
-    pac1.style.top="100px";
-    pac1.style.position="absolute"
-    document.body.appendChild(pac1);
-    }
-    let position=0;
-    let velocity=5;
-    let forward=true;
-    let front=1;
-    function move()
-    {   
-        if(position<600&&forward==true)
-             {
-                pac1.src=pacmen1[front%2]
-                position=position+velocity;
-                pac1.style.left=position+'px';
-                console.log("forward",position);
-                 front=front+1;
-                if(position>=600)
-                      {
-                         forward=false;
-                        console.log("boolean",forward)
-                        }
-                }
-    
-    
-       if(position>0 && forward==false)
-            {
-                pac1.src=pacmen2[front%2]
-                position=position-velocity;
-                pac1.style.left=position+'px';
-                front=front+1;
-                console.log("reverse",position); 
-                 if(position<=0)
-                    {
-                    forward=true;
-                    } 
-             }
-            setTimeout(move,100)
+        var container = document.getElementById("container");
+        var pacman1 = document.getElementById("pac-right");
+        var position = 0;
+        var direction = 1;
+
+        function move() {
+     position += direction * 20;// p=p+d*20
+
+            if (position<0 || position>1000) {
+                direction *= -1;
             }
-</script>
+ if (((position / 20) % 2) !== 0) {
+                if (direction === 1) {
+                    pacman1.src="./images/PacMan2.png";
+                } else {//direction===-1
+                    pacman1.src="./images/PacMan4.png";
+                }
+            } else {//===0
+                if (direction === 1) {
+                    pacman1.src="./images/PacMan1.png";
+                } else {
+                    pacman1.src="./images/PacMan3.png";
+                }
+            }
+ pacman1.style.left=position+ 'px';
+        }
+
+        setInterval(move, 100);
+    </script>
 </body>
 </html>
